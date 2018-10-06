@@ -1,0 +1,24 @@
+config BR2_PACKAGE_CIVETWEB
+	bool "civetweb"
+	depends on BR2_TOOLCHAIN_HAS_THREADS
+	depends on BR2_USE_MMU # fork()
+	help
+	  Full featured embedded web server with Lua support.
+
+	  https://sourceforge.net/projects/civetweb
+
+if BR2_PACKAGE_CIVETWEB
+
+config BR2_CIVETWEB_WITH_LUA
+	bool "enable Lua support"
+	# required by the bundled Sqlite3 and Lua code
+	help
+	  Enable Lua support in Civetweb. Note that this will use a
+	  version of Lua and Sqlite bundled within the Civetweb
+	  sources, and not the packages from Buildroot.
+
+endif
+
+comment "civetweb needs a toolchain w/ threads"
+	depends on BR2_USE_MMU
+	depends on !BR2_TOOLCHAIN_HAS_THREADS
